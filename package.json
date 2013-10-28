@@ -1,0 +1,35 @@
+{
+  "name": "can-route",
+  "version": "0.0.0",
+  "description": "A simple router that runs inside a `http.createServer` handler and returns false when it can’t route a request.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "methods": "0.0.1",
+    "collapse-array": "0.0.1",
+    "named-regexp": "~0.1.1"
+  },
+  "devDependencies": {
+    "tape": "~2.1.0"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:michaelrhodes/can-route.git"
+  },
+  "keywords": [
+    "simple",
+    "router",
+    "regex",
+    "regexp"
+  ],
+  "author": "Michael Rhodes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelrhodes/can-route/issues"
+  }
+}
