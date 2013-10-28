@@ -1,6 +1,6 @@
 var named = require('named-regexp').named
 var collapse = require('collapse-array')
-var defaults = require('./lib/defaults')
+var methods = require('./lib/methods')
 
 var live = function(route) {
   var format = /^\/(.+)\/([mig]*)$/
@@ -17,7 +17,7 @@ var Can = function() {
   this.routes = {}
 }
 
-defaults.call(Can.prototype)
+methods.call(Can.prototype)
 
 Can.prototype.route = function(req, res) {
   var method = req.method.toLowerCase()
