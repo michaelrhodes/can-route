@@ -1,6 +1,6 @@
 {
   "name": "can-route",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A simple router that runs inside a `http.createServer` handler and returns false when it can’t route a request.",
   "main": "index.js",
   "directories": {
