@@ -22,7 +22,7 @@ can.get(/^\/$/,
 )
 
 // Item
-can.patch(get/^\/(:<id>[a-f0-9]{16})\/?$/i,
+can.patch(/^\/(:<id>[a-f0-9]{16})\/?$/i,
   function(req, res, params) {
     res.end(params.id + '\n')
   }
