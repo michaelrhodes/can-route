@@ -29,6 +29,7 @@ can.get(/^\/dog\/(:<speak>w[o0]{2,}f)\/?$/i,
 )
 
 var server = http.createServer(function(req, res) {
+  res.setHeader('Connection', 'close')
   if (!can.route(req, res)) {
     res.setHeader('x-test', 'no')
     res.end()
@@ -41,7 +42,6 @@ server.listen(4444, function() {
     test.plan(7)
     test.on('end', function() {
       server.close()
-      process.kill()
     })
 
     var base = 'http://localhost:4444'
