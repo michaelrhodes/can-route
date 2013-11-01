@@ -1,3 +1,4 @@
+var url = require('url')
 var named = require('named-regexp').named
 var collapse = require('collapse-array')
 var methods = require('./lib/methods')
@@ -25,7 +26,9 @@ Can.prototype.route = function(req, res) {
   var routeable = false
  
   for (var route in routes) {
-    routeable = live(route).exec(req.url)
+    routeable = live(route).exec(
+      url.parse(req.url).pathname
+    )
     if (routeable && routes[route][method]) {
       var params = collapse(routeable.captures)
       routes[route][method](req, res, params)

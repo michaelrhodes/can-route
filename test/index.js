@@ -54,7 +54,7 @@ server.listen(4444, function() {
       )
     })
 
-    var dog = base + '/dog/w0o0Of'
+    var dog = base + '/dog/w0o0Of#hash'
     http.get(dog, function(res) {
       test.equal(
         res.headers['x-test'], 'dog',
@@ -66,7 +66,7 @@ server.listen(4444, function() {
       )
     })
 
-    var item = base + '/aBcdEf1234567890'
+    var item = base + '/aBcdEf1234567890?has=query'
     http.get(item, function(res) {
       test.equal(
         res.headers['x-test'], 'item',

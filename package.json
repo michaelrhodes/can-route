@@ -1,7 +1,7 @@
 {
   "name": "can-route",
-  "version": "0.0.3",
-  "description": "A simple router that runs inside a `http.createServer` handler and returns false when it can’t route a request.",
+  "version": "0.0.4",
+  "description": "A simple regexp router that runs inside a `http.createServer` handler and returns false when it can’t route a request.",
   "main": "index.js",
   "directories": {
     "test": "test"
