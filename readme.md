@@ -39,7 +39,7 @@ http.createServer(function(req, res) {
 ```
 
 #### Browser
-can-route also works in the browser, with basically the same API. The difference is that only the get method may be used to attach handlers, and  
+can-route also works in the browser with basically the same API:
 
 ``` js
 var can = require('can-route')()
