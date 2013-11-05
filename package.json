@@ -1,6 +1,6 @@
 {
   "name": "can-route",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "A simple regexp router that runs inside a `http.createServer` handler and returns false when it can’t route a request.",
   "main": "index.js",
   "directories": {
@@ -15,7 +15,19 @@
     "tape": "~2.1.0"
   },
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "tape test/server.js"
+  },
+  "testling": {
+    "files": "test/browser.js",
+    "browsers": {
+      "ie": [7, 8, 9, 10],
+      "chrome": [25],
+      "firefox": [4, 19],
+      "safari": [5.1, 6],
+      "opera": [10, 12],
+      "iphone": [6],
+      "android": [4.2]
+    }
   },
   "repository": {
     "type": "git",
