@@ -48,7 +48,7 @@ can.get(/^\/$/, function() {
   // No arguments for routes without parameters.
 })
 
-can.get(^\/(:<name>[a-z]+)\/?$/i, function(params) {
+can.get(/^\/(:<name>[a-z]+)\/?$/i, function(params) {
   // The only possible argument is the param object.
 })
 
