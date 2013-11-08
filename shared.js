@@ -36,10 +36,9 @@ module.exports = function(methods, url) {
     else {
       pathname = (hash ?
         href.substr(href.indexOf(req.pathname)) :
-        href.pathname
+        req.pathname
       )
     }
- 
     var routes = this.routes
     var routeable = false
     for (var route in routes) { 
