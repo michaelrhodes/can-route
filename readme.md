@@ -58,7 +58,8 @@ can.get(/#\/(:<name>[a-z]+)\/$/i, function(params) {
 })
 
 window.onpopstate = function() {
-  if (!can.route(window.location)) {
+  var path = window.location || '/path/to/page'
+  if (!can.route(path)) {
     // Handle 404
   }
 }

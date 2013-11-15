@@ -22,23 +22,29 @@ module.exports = function(methods, url) {
   methods.call(Can.prototype)
 
   Can.prototype.route = function(req, res) {
-    var href = req.url || req.href
+    var pathname = (typeof req == 'string' ?
+      req : null
+    )
+
     var method = (server ?
       req.method.toLowerCase() : 'get'
     )
 
     var hash = !server && res === true
-    var pathname = null
 
-    if (server) {
-      pathname = url.parse(href).pathname
+    if (!pathname) {
+      var href = req.url || req.href
+      if (server) {
+        pathname = url.parse(href).pathname
+      }
+      else {
+        pathname = (hash ?
+          href.substr(href.indexOf(req.pathname)) :
+          req.pathname
+        )
+      }
     }
-    else {
-      pathname = (hash ?
-        href.substr(href.indexOf(req.pathname)) :
-        req.pathname
-      )
-    }
+
     var routes = this.routes
     var routeable = false
     for (var route in routes) { 
