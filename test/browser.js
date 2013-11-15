@@ -26,9 +26,9 @@ run('it works: home', function(test) {
   var expected = {}
 
   window.onhashchange = function() {
+    window.onhashchange = null
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
-    window.onhashchange = null
     test.end()
   }
 
@@ -40,9 +40,9 @@ run('it works: item', function(test) {
   var expected = {}
 
   window.onhashchange = function() {
+    window.onhashchange = null
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
-    window.onhashchange = null
     test.end()
   }
 
@@ -55,9 +55,9 @@ run('it works: dog', function(test) {
   var expected = {}
 
   window.onhashchange = function() {
+    window.onhashchange = null
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
-    window.onhashchange = null
     test.end()
   }
 
@@ -68,6 +68,7 @@ run('it works: dog', function(test) {
 
 run('it only uses the pathname by default', function(test) {
   window.onhashchange = function() {
+    window.onhashchange = null
     test.ok(!can.route(location), 'indeed')
     test.end()
   }

@@ -22,15 +22,14 @@ module.exports = function(methods, url) {
   methods.call(Can.prototype)
 
   Can.prototype.route = function(req, res) {
+    var hash = !server && res === true
     var pathname = (typeof req == 'string' ?
-      req : null
+      (!hash ? req.replace(/(\?|#).+$/, '') : req ) :
+      null
     )
-
     var method = (server ?
       req.method.toLowerCase() : 'get'
     )
-
-    var hash = !server && res === true
 
     if (!pathname) {
       var href = req.url || req.href
