@@ -24,7 +24,7 @@ module.exports = function(methods, url) {
   Can.prototype.route = function(req, res) {
     var hash = !server && res === true
     var pathname = (typeof req == 'string' ?
-      (!hash ? req.replace(/(\?|#).+$/, '') : req ) :
+      (!hash ? req.replace(/(\?|#).+$/, '') : req) :
       null
     )
     var method = (server ?
