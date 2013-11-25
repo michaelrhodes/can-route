@@ -38,7 +38,7 @@ module.exports = function(methods, url) {
       }
       else {
         pathname = (hash ?
-          href.substr(href.indexOf(req.pathname)) :
+          href.replace(/^.+:\/\/[^\/]+(.+)/, '$1') :
           req.pathname
         )
       }
