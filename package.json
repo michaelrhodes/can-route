@@ -21,11 +21,11 @@
   "testling": {
     "files": "test/browser.js",
     "browsers": {
-      "ie": [7, 8, 9, 10],
-      "chrome": [25],
-      "firefox": [4, 19],
+      "ie": [6, 7, 8, 9, 10],
+      "chrome": [20, 25, 29],
+      "firefox": [4, 7, 19, 24],
       "safari": [5.1, 6],
-      "opera": [10, 12],
+      "opera": [10, 12, 15],
       "iphone": [6],
       "android": [4.2]
     }
