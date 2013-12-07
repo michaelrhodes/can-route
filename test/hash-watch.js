@@ -4,7 +4,6 @@ var hashwatch = function(handler) {
   if (!(this instanceof hashwatch)) {
     return new hashwatch(handler)
   }
-
   this.hash = window.location.hash
   this.handler = (!shite ?
     handler.bind(this) : handler
