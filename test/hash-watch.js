@@ -6,10 +6,9 @@ var hashwatch = function(handler) {
   }
 
   this.hash = window.location.hash
-  this.handler = handler
-  if (!shite) {
-    this.handler = this.handler.bind(this)
-  }
+  this.handler = (!shite ?
+    handler.bind(this) : handler
+  )
   this.start()
 }
 
