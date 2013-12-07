@@ -16,10 +16,11 @@ module.exports = function(methods, url) {
     if (!(this instanceof Can)) {
       return new Can
     }
-    this.routes = {}
   }
 
   methods.call(Can.prototype)
+
+  Can.prototype.routes = {}
 
   Can.prototype.route = function(req, res) {
     var hash = !server && res === true
