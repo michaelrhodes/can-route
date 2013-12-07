@@ -1,5 +1,6 @@
 var run = require('tape').test
 var can = require('../browser')()
+var hashwatch = require('./hash-watch')
 var result = {}
 
 // Home
@@ -24,53 +25,53 @@ can.get(/#\/dog\/(:<speak>w[o0]{2,}f)\/?$/i, function(params) {
 
 run('it works: home', function(test) {
   var expected = {}
+  expected.test = 'home'
 
-  window.onhashchange = function() {
-    window.onhashchange = null
+  hashwatch(function(hash) {
+    this.stop()
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
     test.end()
-  }
+  })
 
-  expected.test = 'home'
   location.hash = '/'
 })
 
 run('it works: item', function(test) {
   var expected = {}
+  expected.test = 'item'
+  expected.id = 'aBcdEf1234567890'
 
-  window.onhashchange = function() {
-    window.onhashchange = null
+  hashwatch(function() {
+    this.stop()
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
     test.end()
-  }
+  })
 
-  expected.test = 'item'
-  expected.id = 'aBcdEf1234567890'
   location.hash = '/aBcdEf1234567890'
 })
 
 run('it works: dog', function(test) {
   var expected = {}
+  expected.test = 'dog'
+  expected.speak = 'w0o0Of'
 
-  window.onhashchange = function() {
-    window.onhashchange = null
+  hashwatch(function() {
+    this.stop()
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
     test.end()
-  }
+  })
 
-  expected.test = 'dog'
-  expected.speak = 'w0o0Of'
   location.hash = '/dog/w0o0Of'
 })
 
 run('it only uses the pathname by default', function(test) {
-  window.onhashchange = function() {
-    window.onhashchange = null
+  hashwatch(function() {
+    this.stop()
     test.ok(!can.route(location), 'indeed')
     test.end()
-  }
+  })
   location.hash = '/aBcdEf1234567890'
 })
