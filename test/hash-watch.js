@@ -16,7 +16,7 @@ var hashwatch = function(handler) {
 hashwatch.prototype.start = function() {
   var thy = this
   if (!shite) {
-    window.addEventListener('hashchange', thy.handler)
+    window.addEventListener('hashchange', thy.handler, false)
     return
   }
   this.poll = setInterval(function go() {
@@ -30,7 +30,7 @@ hashwatch.prototype.start = function() {
 hashwatch.prototype.stop = function() {
   var thy = this
   if (!shite) {
-    window.removeEventListener('hashchange', thy.handler)
+    window.removeEventListener('hashchange', thy.handler, false)
     return
   }
   clearInterval(this.poll)

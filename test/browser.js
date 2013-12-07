@@ -27,7 +27,7 @@ run('it works: home', function(test) {
   var expected = {}
   expected.test = 'home'
 
-  hashwatch(function(hash) {
+  hashwatch(function() {
     this.stop()
     test.ok(can.route(location, true), 'can route')
     test.deepEqual(result, expected)
