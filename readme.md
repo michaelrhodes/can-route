@@ -1,5 +1,5 @@
 # can-route
-can-route is a simple router that runs inside a `http.createServer` handler and returns false when it can’t route a request. Its routes are defined with [named regular expressions](https://npm.im/named-regexp).
+can-route is a simple router that returns false when it can’t handle a request. Its routes are defined with [named regular expressions](https://npm.im/named-regexp).
 
 [![Build status](https://travis-ci.org/michaelrhodes/can-route.png?branch=master)](https://travis-ci.org/michaelrhodes/can-route)
 
@@ -29,9 +29,19 @@ can.patch(/^\/(:<id>[a-f0-9]{16})\/?$/i,
   }
 )
 
-// Server
 http.createServer(function(req, res) {
-  if (!can.route(req, res)) {
+  // No route has not been registered for
+  // this URI + HTTP method.
+  if (!can.route(req, res)) { 
+
+    // A route *has* been registered for this
+    // URI, but not for this HTTP method.
+    if (can.match(req, res)) {
+      res.statusCode = 405
+      res.end()
+      return
+    }
+
     res.statusCode = 404
     res.end()
   }
