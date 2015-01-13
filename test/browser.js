@@ -10,14 +10,14 @@ can.get(/#\/$/, function() {
 })
 
 // Item
-can.get(/#\/(:<id>[a-f0-9]{16})\/?$/i, function(params) {
+can.get('*#/:id([a-f0-9]{16})', function(params) {
   result = {}
   result.test = 'item'
   result.id = params.id
 })
 
 // Dog
-can.get(/#\/dog\/(:<speak>w[o0]{2,}f)\/?$/i, function(params) {
+can.get('*#/dog/:speak(w[o0]{2,}f)', function(params) {
   result = {}
   result.test = 'dog'
   result.speak = params.speak

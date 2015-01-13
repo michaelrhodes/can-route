@@ -11,7 +11,7 @@ can.get(/^\/$/,
 )
 
 // Item
-can.get(/^\/(:<id>[a-f0-9]{16})\/?$/i,
+can.get('/:id([a-f0-9]{16})',
   function(req, res, params) {
     res.setHeader('x-test', 'item')
     res.setHeader('x-test-id', params.id) 
@@ -20,7 +20,7 @@ can.get(/^\/(:<id>[a-f0-9]{16})\/?$/i,
 )
 
 // Dog
-can.get(/^\/dog\/(:<speak>w[o0]{2,}f)\/?$/i,
+can.get('/dog/:speak(w[o0]{2,}f)',
   function(req, res, params) {
     res.setHeader('x-test', 'dog')
     res.setHeader('x-test-speak', params.speak)
@@ -81,7 +81,7 @@ server.listen(4444, function() {
 
     try {
       // Dupe 
-      can.get(/^\/dog\/(:<speak>w[o0]{2,}f)\/?$/i,
+      can.get('/dog/:speak(w[o0]{2,}f)',
         function(req, res, params) {
           res.setHeader('x-test', 'dog')
           res.setHeader('x-test-speak', params.speak)

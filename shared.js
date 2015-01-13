@@ -1,12 +1,14 @@
-var named = require('named-regexp').named
 var collapse = require('collapse-array')
+var regexify = require('ruta3/pathToRegExp')
 
-var regexp = function(route) {
-  var format = /^\/(.+)\/([mig]*)$/
+var regexp = function(route, captures) {
+  var format = /^\/(.+)\/([migy]*)$/
   var regexp = (route.match(format) || [])
     .slice(1)
 
-  return named(RegExp.apply(this, regexp))
+  return regexp.length ?
+    RegExp.apply(this, regexp) :
+    regexify(route, captures)
 }
 
 module.exports = function(methods, url) {
@@ -47,14 +49,22 @@ module.exports = function(methods, url) {
 
   Can.prototype.match = function(req, res) {
     var pathname = getPathname(req, res)
-    var pattern = null
+    var keys, pattern, matches, captures
 
-    for (var route in this.routes) { 
-      pattern = regexp(route)
+    for (var route in this.routes) {
+      keys = []
+      pattern = regexp(route, keys)
       if (pattern.test(pathname)) {
+        matches = (pathname.match(pattern) || []).slice(1)
+        captures = {}
+
+        for (var i = 0, l = matches.length; i < l; i++) {
+          captures[keys[i]] = matches[i]
+        }
+
         return {
           route: route,
-          captures: pattern.exec(pathname).captures
+          captures: captures
         }
       } 
     }
