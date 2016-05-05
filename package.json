@@ -4,7 +4,6 @@
   "description": "a simple isomorphic router that returns false when it didn’t handle a request",
   "main": "index.js",
   "browser": {
-    "main": "browser.js",
     "methods": "./lib/null",
     "url": "./lib/null"
   },
