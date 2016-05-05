@@ -5,16 +5,16 @@ var regexify = require('ruta3/pathToRegExp')
 var bind = require('./lib/bind-methods')(methods)
 var server = !!url
 
-module.exports = Can
+module.exports = Did
 
-function Can () {
-  if (!(this instanceof Can)) return new Can
+function Did () {
+  if (!(this instanceof Did)) return new Did
   this.routes = {}
 }
 
-bind.call(Can.prototype)
+bind.call(Did.prototype)
 
-Can.prototype.route = function (req, res) {
+Did.prototype.route = function (req, res) {
   var method = (server ? req.method : 'GET').toLowerCase()
   var matched = this.match(req, res)
   if (!matched) return false
@@ -28,7 +28,7 @@ Can.prototype.route = function (req, res) {
   return true
 }
 
-Can.prototype.match = function (req, res) {
+Did.prototype.match = function (req, res) {
   var routes = this.routes
   var pathname = getPathname(req, res)
   var keys, pattern, matches, captures, m

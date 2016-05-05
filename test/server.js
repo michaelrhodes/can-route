@@ -1,9 +1,9 @@
 var test = require('tape')
 var http = require('http')
-var can = require('../')()
+var did = require('../')()
 
 // Home
-can.get(/^\/$/,
+did.get(/^\/$/,
   function (req, res) {
     res.setHeader('x-test', 'home')
     res.end()
@@ -11,7 +11,7 @@ can.get(/^\/$/,
 )
 
 // Item
-can.get('/:id([a-f0-9]{16})',
+did.get('/:id([a-f0-9]{16})',
   function (req, res, params) {
     res.setHeader('x-test', 'item')
     res.setHeader('x-test-id', params.id) 
@@ -20,7 +20,7 @@ can.get('/:id([a-f0-9]{16})',
 )
 
 // Dog
-can.get('/dog/:speak(w[o0]{2,}f)',
+did.get('/dog/:speak(w[o0]{2,}f)',
   function (req, res, params) {
     res.setHeader('x-test', 'dog')
     res.setHeader('x-test-speak', params.speak)
@@ -30,7 +30,7 @@ can.get('/dog/:speak(w[o0]{2,}f)',
 
 var server = http.createServer(function (req, res) {
   res.setHeader('Connection', 'close')
-  if (!can.route(req, res)) {
+  if (!did.route(req, res)) {
     res.setHeader('x-test', 'no')
     res.end()
   }
@@ -81,7 +81,7 @@ server.listen(4444, function () {
 
     try {
       // Dupe 
-      can.get('/dog/:speak(w[o0]{2,}f)',
+      did.get('/dog/:speak(w[o0]{2,}f)',
         function (req, res, params) {
           res.setHeader('x-test', 'dog')
           res.setHeader('x-test-speak', params.speak)
@@ -97,7 +97,7 @@ server.listen(4444, function () {
     http.get(no, function (res) {
       assert.equal(
         res.headers['x-test'], 'no',
-        'returns false if can’t route'
+        'returns false if didn’t route'
       )
     })
   })
