@@ -3,7 +3,11 @@
   "version": "0.3.0",
   "description": "A simple regexp router that returns false when it can’t handle a request.",
   "main": "index.js",
-  "browser": "browser.js",
+  "browser": {
+    "main": "browser.js",
+    "methods": "./lib/null",
+    "url": "./lib/null"
+  },
   "directories": {
     "test": "test"
   },
@@ -13,10 +17,13 @@
     "ruta3": "~2.0.0"
   },
   "devDependencies": {
+    "hashwatch": "~1.0.0",
     "tape": "~2.1.0"
   },
   "scripts": {
-    "test": "tape test/server.js"
+    "test": "npm run test:server",
+    "test:server": "tape test/server.js",
+    "test:browser": "testling -u"
   },
   "testling": {
     "files": "test/browser.js",

@@ -1,77 +1,77 @@
-var run = require('tape').test
-var can = require('../browser')()
-var hashwatch = require('./hash-watch')
+var test = require('tape')
+var hashwatch = require('hashwatch')
+var can = require('../')()
 var result = {}
 
 // Home
-can.get(/#\/$/, function() {
+can.get(/#\/$/, function () {
   result = {}
   result.test = 'home'
 })
 
 // Item
-can.get('*#/:id([a-f0-9]{16})', function(params) {
+can.get('*#/:id([a-f0-9]{16})', function (params) {
   result = {}
   result.test = 'item'
   result.id = params.id
 })
 
 // Dog
-can.get('*#/dog/:speak(w[o0]{2,}f)', function(params) {
+can.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
   result = {}
   result.test = 'dog'
   result.speak = params.speak
 })
 
-run('it works: home', function(test) {
+test('it works: home', function (assert) {
   var expected = {}
   expected.test = 'home'
 
-  hashwatch(function() {
-    this.stop()
-    test.ok(can.route(location, true), 'can route')
-    test.deepEqual(result, expected)
-    test.end()
+  var watch = hashwatch(function () {
+    watch.pause()
+    assert.ok(can.route(location, true), 'can route')
+    assert.deepEqual(result, expected)
+    assert.end()
   })
 
   location.hash = '/'
 })
 
-run('it works: item', function(test) {
+test('it works: item', function (assert) {
   var expected = {}
   expected.test = 'item'
   expected.id = 'aBcdEf1234567890'
 
-  hashwatch(function() {
-    this.stop()
-    test.ok(can.route(location, true), 'can route')
-    test.deepEqual(result, expected)
-    test.end()
+  var watch = hashwatch(function () {
+    watch.pause()
+    assert.ok(can.route(location, true), 'can route')
+    assert.deepEqual(result, expected)
+    assert.end()
   })
 
   location.hash = '/aBcdEf1234567890'
 })
 
-run('it works: dog', function(test) {
+test('it works: dog', function (assert) {
   var expected = {}
   expected.test = 'dog'
   expected.speak = 'w0o0Of'
 
-  hashwatch(function() {
-    this.stop()
-    test.ok(can.route(location, true), 'can route')
-    test.deepEqual(result, expected)
-    test.end()
+  var watch = hashwatch(function () {
+    watch.pause()
+    assert.ok(can.route(location, true), 'can route')
+    assert.deepEqual(result, expected)
+    assert.end()
   })
 
   location.hash = '/dog/w0o0Of'
 })
 
-run('it only uses the pathname by default', function(test) {
-  hashwatch(function() {
-    this.stop()
-    test.ok(!can.route(location), 'indeed')
-    test.end()
+test('it only uses the pathname by default', function (assert) {
+  var watch = hashwatch(function () {
+    watch.pause()
+    assert.ok(!can.route(location), 'indeed')
+    assert.end()
   })
   location.hash = '/aBcdEf1234567890'
 })
