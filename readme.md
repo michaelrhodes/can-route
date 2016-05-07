@@ -105,9 +105,9 @@ window.onhashchange = function() {
 
 | compression         |    size |
 | :------------------ | ------: |
-| did-route.js        | 4.83 kB |
+| did-route.js        | 4.93 kB |
 | did-route.min.js    | 2.68 kB |
-| did-route.min.js.gz | 1.23 kB |
+| did-route.min.js.gz | 1.25 kB |
 
 
 #### Running the tests

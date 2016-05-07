@@ -23,6 +23,11 @@ did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
   result.speak = params.speak
 })
 
+// Dog
+did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
+  result.second = 'yes'
+})
+
 test('it works: home', function (assert) {
   var expected = {}
   expected.test = 'home'
@@ -56,6 +61,7 @@ test('it works: dog', function (assert) {
   var expected = {}
   expected.test = 'dog'
   expected.speak = 'w0o0Of'
+  expected.second = 'yes'
 
   var watch = hashwatch(function () {
     watch.pause()

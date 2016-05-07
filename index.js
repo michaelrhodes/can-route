@@ -19,12 +19,17 @@ Did.prototype.route = function (req, res) {
   var matched = this.match(req, res)
   if (!matched) return false
 
-  var route = this.routes[matched.route][method]
-  if (!route) return false
+  var handlers = this.routes[matched.route][method]
+  if (!handlers || !handlers.length) return false
 
   var params = collapse(matched.captures)
   var args = server ? [req, res, params] : [params]
-  route.apply(this, args)
+  var total = handlers.length
+  var handler
+  while (handler = handlers[--total]) {
+    handler.apply(this, args)
+  }
+
   return true
 }
 
@@ -44,6 +49,7 @@ Did.prototype.match = function (req, res) {
     m = matches.length
     captures = {}
     while (m--) {
+      if (!keys[m]) continue
       captures[keys[m]] = matches[m]
     }
 

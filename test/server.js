@@ -24,6 +24,12 @@ did.get('/dog/:speak(w[o0]{2,}f)',
   function (req, res, params) {
     res.setHeader('x-test', 'dog')
     res.setHeader('x-test-speak', params.speak)
+  }
+)
+
+did.get('/dog/:speak(w[o0]{2,}f)',
+  function (req, res, params) {
+    res.setHeader('x-test-second', 'yes')
     res.end()
   }
 )
@@ -64,6 +70,10 @@ server.listen(4444, function () {
         res.headers['x-test-speak'], 'w0o0Of',
         'named capture groups work'
       )
+      assert.equal(
+        res.headers['x-test-second'], 'yes',
+        'multiple handlers are allowed'
+      )
     })
 
     var item = base + '/aBcdEf1234567890?has=query'
@@ -78,20 +88,6 @@ server.listen(4444, function () {
         'regexp modifiers work'
       )
     })
-
-    try {
-      // Dupe 
-      did.get('/dog/:speak(w[o0]{2,}f)',
-        function (req, res, params) {
-          res.setHeader('x-test', 'dog')
-          res.setHeader('x-test-speak', params.speak)
-          res.end()
-        }
-      )
-    }
-    catch (error) {
-      assert.ok(!!error, 'doesn’t create duplicates')
-    }
 
     var no = base + '/blah'
     http.get(no, function (res) {
