@@ -25,7 +25,7 @@ did.get('/', function (req, res) {
 
 // Item
 did.patch('/item/:id([a-f0-9]{16})',
-  function(req, res, params) {
+  function (req, res, params) {
     res.end('Updated ' + params.id + '\n')
   }
 )
