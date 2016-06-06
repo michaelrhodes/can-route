@@ -29,9 +29,9 @@ Did.prototype.route = function (req, res) {
     handler.call(this, params), true
 }
 
-Did.prototype.match = function (req, res) {
+Did.prototype.match = function (req, qh) {
   var routes = this.routes
-  var path = pathname(req, res)
+  var path = pathname(req, qh)
   var keys, regex, params, matches, m
 
   for (var pattern in routes) {
@@ -51,8 +51,8 @@ Did.prototype.match = function (req, res) {
   return false
 }
 
-function pathname (req, res) {
-  var hash = !server && res === true
+function pathname (req, qh) {
+  var hash = !server && qh === true
 
   // In the browser you match the value of
   // window.location.href or a string path

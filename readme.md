@@ -37,7 +37,7 @@ http.createServer(function (req, res) {
 
     // A route *has* been registered for this
     // URI, but not for this HTTP method.
-    if (did.match(req, res)) {
+    if (did.match(req)) {
       res.statusCode = 405
       res.end()
       return
