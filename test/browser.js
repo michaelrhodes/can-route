@@ -4,7 +4,7 @@ var did = require('../')()
 var result = {}
 
 // Home
-did.get(/#\/$/, function () {
+did.get('*#/', function () {
   result = {}
   result.test = 'home'
 })
@@ -21,11 +21,6 @@ did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
   result = {}
   result.test = 'dog'
   result.speak = params.speak
-})
-
-// Dog
-did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
-  result.second = 'yes'
 })
 
 test('it works: home', function (assert) {
@@ -61,7 +56,6 @@ test('it works: dog', function (assert) {
   var expected = {}
   expected.test = 'dog'
   expected.speak = 'w0o0Of'
-  expected.second = 'yes'
 
   var watch = hashwatch(function () {
     watch.pause()

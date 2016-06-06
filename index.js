@@ -1,7 +1,6 @@
 var url = require('url')
 var methods = require('methods') || ['get']
-var collapse = require('collapse-array')
-var regexify = require('ruta3/pathToRegExp')
+var regexy = require('ruta3/pathToRegExp')
 var bind = require('./lib/bind-methods')(methods)
 var server = !!url
 
@@ -15,79 +14,60 @@ function Did () {
 bind.call(Did.prototype)
 
 Did.prototype.route = function (req, res) {
-  var method = (server ? req.method : 'GET').toLowerCase()
-  var matched = this.match(req, res)
-  if (!matched) return false
+  var method = server ? req.method.toLowerCase() : 'get'
+  var route = this.match(req, res)
+  if (!route) return false
 
-  var handlers = this.routes[matched.route][method]
-  if (!handlers || !handlers.length) return false
+  var pattern = route[0]
+  var params = route[1]
 
-  var params = collapse(matched.captures)
-  var args = server ? [req, res, params] : [params]
-  var total = handlers.length
-  var handler
-  while (handler = handlers[--total]) {
-    handler.apply(this, args)
-  }
+  var handler = this.routes[pattern][method]
+  if (!handler) return false
 
-  return true
+  return server ?
+    handler.apply(this, [req, res, params]) :
+    handler.call(this, params), true
 }
 
 Did.prototype.match = function (req, res) {
   var routes = this.routes
-  var pathname = getPathname(req, res)
-  var keys, pattern, matches, captures, m
+  var path = pathname(req, res)
+  var keys, regex, params, matches, m
 
-  for (var route in routes) {
-    if (!routes.hasOwnProperty(route)) continue
+  for (var pattern in routes) {
+    if (!routes.hasOwnProperty(pattern)) continue
 
     keys = []
-    pattern = regexp(route, keys)
-    if (!pattern.test(pathname)) continue
+    regex = regexy(pattern, keys)
+    if (!regex.test(path)) continue
 
-    matches = match(pathname, pattern)
+    params = {}
+    matches = match(path, regex)
     m = matches.length
-    captures = {}
-    while (m--) {
-      if (!keys[m]) continue
-      captures[keys[m]] = matches[m]
-    }
-
-    return {
-      route: route,
-      captures: captures
-    }
+    while (m--) params[keys[m]] = matches[m]
+    return [pattern, params]
   }
 
   return false
 }
 
-function getPathname (req, res) {
+function pathname (req, res) {
   var hash = !server && res === true
-  var pathname = (typeof req == 'string' ? (
-      !hash ? req.replace(/(\?|#).+$/, '') : req
-    ) : null
+
+  // In the browser you match the value of
+  // window.location.href or a string path
+  var pathname = typeof req === 'string' && (
+    hash ? req : req.replace(/(\?|#).+$/, '')
   )
 
   if (pathname) return pathname
-
   var href = req.url || req.href
-  if (server) return url.parse(href).pathname
 
-  return hash ?
-    href.replace(/^.+:\/\/[^\/]+(.+)/, '$1') :
+  return server ? url.parse(href).pathname : hash ?
+    href.replace(/^.+:\/\/[^\/]+/, '') :
     req.pathname
 }
 
-function regexp (route, captures) {
-  var format = /^\/(.+)\/([migy]*)$/
-  var regexp = match(route, format)
-
-  return regexp.length ?
-    RegExp.apply(this, regexp) :
-    regexify(route, captures)
-}
-
-function match (string, regexp) {
-  return (string.match(regexp) || []).slice(1)
+function match (str, regex) {
+  return (str.match(regex) || []).slice(1)
 }
