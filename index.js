@@ -41,10 +41,14 @@ Did.prototype.match = function (req, qh) {
     regex = regexy(pattern, keys)
     if (!regex.test(path)) continue
 
-    params = {}
     matches = match(path, regex)
     m = matches.length
-    while (m--) params[keys[m]] = matches[m]
+    while (m--) {
+      if (keys[m]) {
+        params = params || {}
+        params[keys[m]] = matches[m]
+      }
+    }
     return [pattern, params]
   }
 

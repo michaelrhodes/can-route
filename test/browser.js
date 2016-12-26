@@ -4,9 +4,10 @@ var did = require('../')()
 var result = {}
 
 // Home
-did.get('*#/', function () {
+did.get('*#/', function (params) {
   result = {}
   result.test = 'home'
+  result.params = typeof params
 })
 
 // Item
@@ -26,6 +27,7 @@ did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
 test('it works: home', function (assert) {
   var expected = {}
   expected.test = 'home'
+  expected.params = 'undefined'
 
   var watch = hashwatch(function () {
     watch.pause()

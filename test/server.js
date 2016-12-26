@@ -4,8 +4,9 @@ var did = require('../')()
 
 // Home
 did.get('/',
-  function (req, res) {
+  function (req, res, params) {
     res.setHeader('x-test', 'home')
+    res.setHeader('x-test-params', typeof params)
     res.end()
   }
 )
@@ -55,6 +56,10 @@ server.listen(4444, function () {
       assert.equal(
         res.headers['x-test'], 'home',
         'correct route: home'
+      )
+      assert.equal(
+        res.headers['x-test-params'], 'undefined',
+        'typeof params: undefined'
       )
     })
 
