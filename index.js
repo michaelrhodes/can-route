@@ -25,8 +25,13 @@ Did.prototype.route = function (req, res) {
   if (!handler) return false
 
   return server ?
-    handler.apply(this, [req, res, params]) :
-    handler.call(this, params), true
+    params ?
+      handler.apply(this, [req, res, params]) :
+      handler.apply(this, [req, res]) :
+    params ?
+      handler.call(this, params) :
+      handler.call(this),
+   true
 }
 
 Did.prototype.match = function (req, qh) {
