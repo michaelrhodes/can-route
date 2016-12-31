@@ -1,6 +1,6 @@
 {
   "name": "did-route",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "an isomorphic router that returns false when it didn’t handle a request",
   "main": "index.js",
   "browser": {
