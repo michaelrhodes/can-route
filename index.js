@@ -1,7 +1,7 @@
 var url = require('url')
-var methods = require('methods') || ['get']
+var methods = require('methods')
 var regexy = require('ruta3/pathToRegExp')
-var bind = require('./lib/bind-methods')(methods)
+var bind = require('./lib/bind-methods')
 var server = !!url
 
 module.exports = Did
@@ -11,7 +11,7 @@ function Did () {
   this.routes = {}
 }
 
-bind.call(Did.prototype)
+bind.call(Did.prototype, methods || ['get'])
 
 Did.prototype.route = function (req, res) {
   var method = server ? req.method.toLowerCase() : 'get'
