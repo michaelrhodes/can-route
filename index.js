@@ -62,18 +62,18 @@ Did.prototype.match = function (req, qh) {
 
 function pathname (req, qh) {
   var hash = !server && qh === true
+  var origin = /^[^:]+:\/\/[^\/]+/
 
   // In the browser you match the value of
   // window.location.href or a string path
-  var pathname = typeof req === 'string' && (
-    hash ? req : req.replace(/(\?|#).+$/, '')
-  )
+  if (typeof req === 'string') {
+    req = req.replace(origin, '')
+    return  hash ? req : req.replace(/^(\/[^?#]*).*$/, '$1')
+  }
 
-  if (pathname) return pathname
   var href = req.url || req.href
-
-  return server ? url.parse(href).pathname : hash ?
-    href.replace(/^.+:\/\/[^\/]+/, '') :
+  return server ? url.parse(href).pathname :
+    hash ? href.replace(origin, '') :
     req.pathname
 }
 
