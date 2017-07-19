@@ -1,6 +1,6 @@
 var test = require('tape')
 var hashwatch = require('hashwatch')
-var did = require('../')()
+var did = require('../browser')()
 var result = {}
 
 // Home
@@ -27,7 +27,7 @@ did.get('*#/dog/:speak(w[o0]{2,}f)', function (params) {
 test('it works: home', function (assert) {
   var expected = {}
   expected.test = 'home'
-  expected.params = 'undefined'
+  expected.params = 'object'
 
   var watch = hashwatch(function () {
     watch.pause()

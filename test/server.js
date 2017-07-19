@@ -11,11 +11,19 @@ did.get('/',
   }
 )
 
+// Dog
+did.get('/dog/:speak(w[o0]{2,}f)',
+  function (req, res, params) {
+    res.setHeader('x-test', 'dog')
+    res.setHeader('x-test-speak', params.speak)
+  }
+)
+
 // Item
 did.get('/:id([a-f0-9]{16})',
   function (req, res, params) {
     res.setHeader('x-test', 'item')
-    res.setHeader('x-test-id', params.id) 
+    res.setHeader('x-test-id', params.id)
     res.end()
   }
 )
@@ -27,15 +35,6 @@ did.get('/:id([a-f0-9]{16})/:sub',
     res.setHeader('x-test-id', params.id)
     res.setHeader('x-test-sub', params.sub)
     res.end()
-  }
-)
-
-
-// Dog
-did.get('/dog/:speak(w[o0]{2,}f)',
-  function (req, res, params) {
-    res.setHeader('x-test', 'dog')
-    res.setHeader('x-test-speak', params.speak)
   }
 )
 
@@ -51,15 +50,15 @@ server.listen(4444, function () {
   test('it works', function (assert) {
     var base = 'http://localhost:4444'
 
-    var home = base + '/' 
+    var home = base + '/'
     http.get(home, function (res) {
       assert.equal(
         res.headers['x-test'], 'home',
         'correct route: home'
       )
       assert.equal(
-        res.headers['x-test-params'], 'undefined',
-        'typeof params: undefined'
+        res.headers['x-test-params'], 'object',
+        'typeof params: object'
       )
     })
 
