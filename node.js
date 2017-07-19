@@ -54,7 +54,7 @@ function Did () {
   if (!(m = methods[i++])) return
   var method = m.toUpperCase()
   this[m] = function (path, handler) {
-    on.call(this, method, path, handler)
+    this.on(method, path, handler)
   }
   bindHttpMethod.call(this, i)
 }).call(Did.prototype, 0)
@@ -163,7 +163,7 @@ Did.prototype.match = function (req) {
   }
 }
 
-function on (method, path, handler) {
+Did.prototype.on = function (method, path, handler) {
   var params = []
   var j = 0
 
@@ -172,7 +172,7 @@ function on (method, path, handler) {
     // parametric route
     if (path.charCodeAt(i) === 58) {
       j = i + 1
-      insert.call(this, method, path.slice(0, i), 0, null, null, null)
+      this._insert(method, path.slice(0, i), 0, null, null, null)
 
       // isolate the parameter name
       while (i < len && path.charCodeAt(i) !== 47) i++
@@ -188,22 +188,22 @@ function on (method, path, handler) {
 
       // if the path is ended
       if (i === len) {
-        return insert.call(this, method, path.slice(0, i), regex ? 3 : 1, params, handler, regex)
+        return this._insert(method, path.slice(0, i), regex ? 3 : 1, params, handler, regex)
       }
-      insert.call(this, method, path.slice(0, i), regex ? 3 : 1, params, null, null, regex)
+      this._insert(method, path.slice(0, i), regex ? 3 : 1, params, null, null, regex)
 
     // wildcard route
     } else if (path.charCodeAt(i) === 42) {
-      insert.call(this, method, path.slice(0, i), 0, null, null)
+      this._insert(method, path.slice(0, i), 0, null, null)
       params.push('*')
-      return insert.call(this, method, path.slice(0, len), 2, params, handler)
+      return this._insert(method, path.slice(0, len), 2, params, handler)
     }
   }
   // static route
-  insert.call(this, method, path, 0, params, handler)
+  this._insert(method, path, 0, params, handler)
 }
 
-function insert (method, path, kind, params, handler, regex) {
+Did.prototype._insert = function (method, path, kind, params, handler, regex) {
   var prefix = ''
   var pathLen = 0
   var prefixLen = 0
