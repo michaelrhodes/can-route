@@ -56,6 +56,7 @@ function Did () {
   this[m] = function (path, handler) {
     this.on(method, path, handler)
   }
+  if (m === 'delete') this.del = this[m]
   bindHttpMethod.call(this, i)
 }).call(Did.prototype, 0)
 

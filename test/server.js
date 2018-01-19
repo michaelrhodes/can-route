@@ -1,5 +1,5 @@
 var test = require('tape')
-var http = require('http')
+var http = require('simple-get')
 var did = require('../')()
 
 // Home
@@ -38,7 +38,12 @@ did.get('/:id([a-f0-9]{16})/:sub',
   }
 )
 
-var server = http.createServer(function (req, res) {
+did.del('/', function (req, res) {
+  res.setHeader('x-test', 'deleted')
+  res.end()
+})
+
+var server = require('http').createServer(function (req, res) {
   res.setHeader('Connection', 'close')
   if (!did.route(req, res)) {
     res.setHeader('x-test', 'no')
@@ -51,7 +56,7 @@ server.listen(4444, function () {
     var base = 'http://localhost:4444'
 
     var home = base + '/'
-    http.get(home, function (res) {
+    http.get(home, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'home',
         'correct route: home'
@@ -63,7 +68,7 @@ server.listen(4444, function () {
     })
 
     var dog = base + '/dog/w0o0Of#hash'
-    http.get(dog, function (res) {
+    http.get(dog, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'dog',
         'correct route: dog'
@@ -75,7 +80,7 @@ server.listen(4444, function () {
     })
 
     var item = base + '/aBcdEf1234567890?has=query'
-    http.get(item, function (res) {
+    http.get(item, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'item',
         'correct route: item'
@@ -88,7 +93,7 @@ server.listen(4444, function () {
     })
 
     var sub = base + '/aBcdEf1234567890/beep?has=query'
-    http.get(sub, function (res) {
+    http.get(sub, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'sub-item',
         'correct route: sub-item'
@@ -119,10 +124,18 @@ server.listen(4444, function () {
     }
 
     var no = base + '/blah'
-    http.get(no, function (res) {
+    http.get(no, function (err, res) {
+      return
       assert.equal(
         res.headers['x-test'], 'no',
         'returns false if didn’t route'
+      )
+    })
+
+    http.delete(base + '/', function (err, res) {
+      assert.equal(
+        res.headers['x-test'], 'deleted',
+        'creates del alias for delete method'
       )
       assert.end()
       process.exit(0)

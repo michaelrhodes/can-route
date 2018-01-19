@@ -33,7 +33,7 @@ did.patch('/item/:id([a-f0-9]{16})',
 http.createServer(function (req, res) {
   // No route has not been registered for
   // this URI and HTTP method.
-  if (!did.route(req, res)) { 
+  if (!did.route(req, res)) {
 
     // A route *has* been registered for this
     // URI, but not for this HTTP method.
