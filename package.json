@@ -1,11 +1,14 @@
 {
   "name": "did-route",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "description": "an isomorphic router that returns false when it didn’t handle a request",
   "main": "node.js",
   "browser": "browser.js",
-  "directories": {
-    "test": "test"
+  "scripts": {
+    "bench": "node bench.js",
+    "test": "npm run test:server",
+    "test:server": "tape test/server.js",
+    "test:browser": "testling -u"
   },
   "dependencies": {
     "methods": "~0.1.0",
@@ -14,66 +17,27 @@
   "devDependencies": {
     "benchmark": "~2.1.4",
     "hashwatch": "~1.0.0",
-    "tape": "~2.1.0"
-  },
-  "scripts": {
-    "bench": "node bench.js",
-    "test": "npm run test:server",
-    "test:server": "tape test/server.js",
-    "test:browser": "testling -u"
+    "simple-get": "~2.7.0",
+    "tape": "~2.1.0",
+    "testling": "~1.7.1"
   },
   "testling": {
     "files": "test/browser.js",
     "browsers": {
-      "ie": [
-        6,
-        7,
-        8,
-        9,
-        10
-      ],
-      "chrome": [
-        20,
-        25,
-        29
-      ],
-      "firefox": [
-        3,
-        4,
-        7,
-        19,
-        24
-      ],
-      "safari": [
-        5.1,
-        6
-      ],
-      "opera": [
-        10,
-        12,
-        15
-      ],
-      "iphone": [
-        6
-      ],
-      "android": [
-        4.2
-      ]
+      "ie": [6, 7, 8, 9, 10],
+      "chrome": [20, 25, 29],
+      "firefox": [3, 4, 7, 19, 24],
+      "safari": [5.1, 6],
+      "opera": [10, 12, 15],
+      "iphone": [6],
+      "android": [4.2]
     }
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:michaelrhodes/did-route.git"
   },
-  "keywords": [
-    "simple",
-    "router",
-    "regex",
-    "regexp"
-  ],
+  "keywords": ["simple", "router", "regex", "regexp"],
   "author": "Michael Rhodes",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/michaelrhodes/did-route/issues"
-  }
+  "license": "MIT"
 }
