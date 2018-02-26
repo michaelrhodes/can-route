@@ -63,6 +63,7 @@ function Did () {
 Did.prototype.route = function (req, res) {
   var match = this.match(req)
   if (!match || match === true) return false
+  if (!match.handler) return false
   return match.handler(req, res, match.params), true
 }
 
