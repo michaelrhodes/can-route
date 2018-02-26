@@ -92,7 +92,7 @@ Did.prototype.match = function (req) {
       var handle = currentNode.getHandler(method)
       if (!handle) return true
 
-      var paramNames = handle.params
+      var paramNames = handle.params || []
       var paramsObj = {}
 
       for (i = 0; i < paramNames.length; i++) {
