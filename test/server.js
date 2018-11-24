@@ -3,7 +3,7 @@ var http = require('simple-get')
 var did = require('../')()
 
 // Home
-did.get('/',
+did.get('/home',
   function (req, res, params) {
     res.setHeader('x-test', 'home')
     res.setHeader('x-test-params', typeof params)
@@ -45,6 +45,7 @@ did.del('/', function (req, res) {
 
 var server = require('http').createServer(function (req, res) {
   res.setHeader('Connection', 'close')
+  res.setHeader('x-match', did.match(req) ? 'yes' : 'no')
   if (!did.route(req, res)) {
     res.setHeader('x-test', 'no')
     res.end()
@@ -55,7 +56,7 @@ server.listen(4444, function () {
   test('it works', function (assert) {
     var base = 'http://localhost:4444'
 
-    var home = base + '/'
+    var home = base + '/home'
     http.get(home, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'home',
@@ -125,10 +126,16 @@ server.listen(4444, function () {
 
     var no = base + '/blah'
     http.get(no, function (err, res) {
-      return
       assert.equal(
         res.headers['x-test'], 'no',
         'returns false if didn’t route'
+      )
+    })
+
+    http.get(base, function (err, res) {
+      assert.equal(
+        res.headers['x-match'], 'no',
+        'does not match non-existent / route'
       )
     })
 
