@@ -91,7 +91,7 @@ Did.prototype.match = function (req) {
     // found the route
     if (pathLen === 0 || path === prefix) {
       var handle = currentNode.getHandler(method)
-      if (!handle) return false
+      if (!handle) return !!Object.keys(currentNode.map || {}).length
 
       var paramNames = handle.params || []
       var paramsObj = {}

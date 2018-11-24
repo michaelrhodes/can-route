@@ -38,7 +38,7 @@ did.get('/:id([a-f0-9]{16})/:sub',
   }
 )
 
-did.del('/', function (req, res) {
+did.del('/deletable', function (req, res) {
   res.setHeader('x-test', 'deleted')
   res.end()
 })
@@ -54,6 +54,7 @@ var server = require('http').createServer(function (req, res) {
 
 server.listen(4444, function () {
   test('it works', function (assert) {
+    assert.plan(14)
     var base = 'http://localhost:4444'
 
     var home = base + '/home'
@@ -137,15 +138,26 @@ server.listen(4444, function () {
         res.headers['x-match'], 'no',
         'does not match non-existent / route'
       )
+
+      did.post('/', function (req, res) {
+        res.end()
+      })
+
+      http.get(base, function (err, res) {
+        assert.equal(res.headers['x-match'], 'yes', 'matches route')
+        assert.equal(res.headers['x-test'], 'no', 'does not route')
+      })
     })
 
-    http.delete(base + '/', function (err, res) {
+    http.delete(base + '/deletable', function (err, res) {
       assert.equal(
         res.headers['x-test'], 'deleted',
         'creates del alias for delete method'
       )
-      assert.end()
-      process.exit(0)
     })
+  })
+
+  test.onFinish(function () {
+    server.close()
   })
 })
