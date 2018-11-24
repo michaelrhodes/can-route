@@ -6,8 +6,8 @@
   "browser": "browser.js",
   "scripts": {
     "bench": "node bench.js",
-    "test": "npm run test:server",
-    "test:server": "tape test/server.js",
+    "test": "npm run test:node",
+    "test:node": "tape test/node.js",
     "test:browser": "testling -u"
   },
   "dependencies": {
