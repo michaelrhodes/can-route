@@ -8,22 +8,22 @@ did.get('/user/:id', () => true)
 did.get('/abc/def/ghi/lmn/opq/rst/uvz', () => true)
 
 suite
-  .add('lookup static route', function () {
+  .add('route static', function () {
     did.route({ method: 'GET', url: '/' }, null)
   })
-  .add('lookup dynamic route', function () {
+  .add('route dynamic', function () {
     did.route({ method: 'GET', url: '/user/tomas' }, null)
   })
-  .add('lookup long static route', function () {
+  .add('route long static', function () {
     did.route({ method: 'GET', url: '/abc/def/ghi/lmn/opq/rst/uvz' }, null)
   })
-  .add('find static route', function () {
+  .add('match static', function () {
     did.match({ method: 'GET', url: '/' })
   })
-  .add('find dynamic route', function () {
+  .add('match dynamic', function () {
     did.match({ method: 'GET', url: '/user/tomas' })
   })
-  .add('find long static route', function () {
+  .add('match long static', function () {
     did.match({ method: 'GET', url: '/abc/def/ghi/lmn/opq/rst/uvz' })
   })
   .on('cycle', function (event) {
