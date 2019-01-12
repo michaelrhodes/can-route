@@ -57,7 +57,7 @@ server.listen(4444, function () {
     assert.plan(14)
     var base = 'http://localhost:4444'
 
-    var home = base + '/home'
+    var home = base + '/home/'
     http.get(home, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'home',
@@ -69,7 +69,7 @@ server.listen(4444, function () {
       )
     })
 
-    var dog = base + '/dog/w0o0Of#hash'
+    var dog = base + '/dog/w0o0Of/#hash'
     http.get(dog, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'dog',
@@ -81,7 +81,7 @@ server.listen(4444, function () {
       )
     })
 
-    var item = base + '/aBcdEf1234567890?has=query'
+    var item = base + '/aBcdEf1234567890/?has=query'
     http.get(item, function (err, res) {
       assert.equal(
         res.headers['x-test'], 'item',

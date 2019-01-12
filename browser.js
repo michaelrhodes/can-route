@@ -1,4 +1,6 @@
 var regexy = require('ruta3/pathToRegExp')
+var origin = /^[^:]+:\/\/[^\/]+/
+var cruft = /\/*([?#].*)?$/
 
 module.exports = Did
 
@@ -60,11 +62,9 @@ function indexOf (routes, pattern) {
 }
 
 function pathname (req, hash) {
-  var origin = /^[^:]+:\/\/[^\/]+/
-
   if (typeof req === 'string') {
     req = req.replace(origin, '')
-    return hash ? req : req.replace(/^(\/[^?#]*).*$/, '$1')
+    return hash ? req : req.replace(cruft, '') || '/'
   }
 
   return hash ?

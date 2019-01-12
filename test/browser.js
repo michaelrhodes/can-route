@@ -51,7 +51,7 @@ test('it works: item', function (assert) {
     assert.end()
   })
 
-  location.hash = '/aBcdEf1234567890'
+  location.hash = '/aBcdEf1234567890/'
 })
 
 test('it works: dog', function (assert) {

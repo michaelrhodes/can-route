@@ -42,6 +42,7 @@ SOFTWARE.
 
 var methods = require('methods')
 var errored = false
+var cruft = /\/*([?#].*)?$/
 
 module.exports = Did
 
@@ -69,7 +70,7 @@ Did.prototype.route = function (req, res) {
 
 Did.prototype.match = function (req) {
   var method = req.method
-  var path = sanitizeUrl(req.url)
+  var path = req.url.replace(cruft, '') || '/'
   var currentNode = this.tree
   var node = false
   var kind = 0
@@ -270,13 +271,18 @@ Did.prototype._insert = function (method, path, kind, params, handler, regex) {
 }
 
 function sanitizeUrl (url) {
-  for (var i = 0, len = url.length; i < len; i++) {
-    var charCode = url.charCodeAt(i)
-    if (charCode === 63 || charCode === 35) {
-      return url.slice(0, i)
+  for (var i = 0, len = url.length, cc; i < len; i++) {
+    cc = url.charCodeAt(i)
+    if (cc === 63 || cc === 35) {
+      url = url.substring(0, i)
+      len = url.length
+      break
     }
   }
-  return url
+
+  return url.charCodeAt(len - 1) === 47 ?
+    url.substring(0, len - 1) :
+    url
 }
 
 function fastDecode (path) {
