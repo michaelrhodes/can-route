@@ -270,21 +270,6 @@ Did.prototype._insert = function (method, path, kind, params, handler, regex) {
   }
 }
 
-function sanitizeUrl (url) {
-  for (var i = 0, len = url.length, cc; i < len; i++) {
-    cc = url.charCodeAt(i)
-    if (cc === 63 || cc === 35) {
-      url = url.substring(0, i)
-      len = url.length
-      break
-    }
-  }
-
-  return url.charCodeAt(len - 1) === 47 ?
-    url.substring(0, len - 1) :
-    url
-}
-
 function fastDecode (path) {
   errored = false
   try {
