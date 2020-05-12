@@ -93,8 +93,11 @@ Did.prototype.match = function (req) {
     if (pathLen === 0 || path === prefix) {
       var handle = currentNode.getHandler(method)
       if (!handle) return !!Object.keys(currentNode.map || {}).length
+      if (!handle.params || !handle.params.length) return {
+        handler: handle.handler
+      }
 
-      var paramNames = handle.params || []
+      var paramNames = handle.params
       var paramsObj = {}
 
       for (i = 0; i < paramNames.length; i++) {

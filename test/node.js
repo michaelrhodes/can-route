@@ -64,8 +64,8 @@ server.listen(4444, function () {
         'correct route: home'
       )
       assert.equal(
-        res.headers['x-test-params'], 'object',
-        'typeof params: object'
+        res.headers['x-test-params'], 'undefined',
+        'typeof params: undefined'
       )
     })
 

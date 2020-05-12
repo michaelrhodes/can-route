@@ -21,7 +21,7 @@ Did.prototype.route = function (req, res) {
   if (!route) return false
 
   var pattern = route[0]
-  var params = route[1] || {}
+  var params = route[1]
 
   return pattern.handler.call(this, params), true
 }
@@ -39,11 +39,11 @@ Did.prototype.match = function (req, qh) {
     regex = regexy(route.pattern, keys)
     if (!regex.test(path)) continue
 
-    params = {}
     matches = match(path, regex)
     m = matches.length
     while (m--) {
       if (keys[m]) {
+        params = params || {}
         params[keys[m]] = matches[m]
       }
     }
